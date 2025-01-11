@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Penghibur Wanita</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(to bottom, #ffcccc, #ff99cc);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      margin: 0;
+    }
+    #container {
+      width: 80%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    #container:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+    h1 {
+      color: #ff6699;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+    #nameInput {
+      width: calc(100% - 20px);
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid #ff6699;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      transition: border-color 0.3s;
+    }
+    #nameInput:focus {
+      outline: none;
+      border-color: #ff3366;
+    }
+    #submitButton {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #ff6699;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    #submitButton:hover {
+      background-color: #ff3366;
+      transform: scale(1.1);
+    }
+    #successMessage {
+      display: none;
+    }
+    #animation {
+      display: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>Masukkan Namamu!</h1>
+    <input type="text" id="nameInput" placeholder="Masukkan nama..." required>
+    <button id="submitButton">Submit</button>
+  </div>
+  <div id="successMessage">
+    <h1 id="greeting"></h1>
+    <div id="animation">
+      <div class="heart"></div>
+      <div class="heart"></div>
+      <div class="heart"></div>
+    </div>
+  </div>
+
+  <script>
+    const submitButton = document.getElementById("submitButton");
+    const nameInput = document.getElementById("nameInput");
+    const successMessage = document.getElementById("successMessage");
+    const greeting = document.getElementById("greeting");
+    const animation = document.getElementById("animation");
+
+    let attempts = 0;
+
+    // Fungsi untuk memindahkan tombol
+    function moveButton() {
+      const randomX = Math.random() * (window.innerWidth - 150);
+      const randomY = Math.random() * (window.innerHeight - 50);
+      submitButton.style.position = "absolute";
+      submitButton.style.left = `${randomX}px`;
+      submitButton.style.top = `${randomY}px`;
+    }
+
+    submitButton.addEventListener("mouseover", () => {
+      if (attempts < 5) {
+        moveButton();
+      }
+    });
+
+    submitButton.addEventListener("click", () => {
+      const name = nameInput.value.trim();
+
+      if (name === "") {
+        alert("Nama tidak boleh kosong! Silakan masukkan nama.");
+        return;
+      }
+
+      attempts++;
+
+      if (attempts >= 5) {
+        // Ketika batas tercapai, tidak lagi memindahkan tombol
+        submitButton.removeEventListener("mouseover", moveButton);
+
+        successMessage.style.display = "block";
+        greeting.textContent = `Selamat, ${name}! Kamu berhasil, Saya senang kamu telah bahagia!`;
+        animation.style.display = "block";
+
+        nameInput.style.display = "none"; // Sembunyikan input nama
+        submitButton.textContent = "😊"; // Ubah tombol menjadi ikon
+      }
+    });
+  </script>
+</body>
+</html>
